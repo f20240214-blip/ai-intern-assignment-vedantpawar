@@ -97,64 +97,7 @@ function validateCourseLevel() {
     clearRadioError();
     return true;
 }
-/*I have a Student Lead Capture Form written in vanilla JavaScript.
 
-The form contains a Course Level radio group:
-
-<input type="radio" name="courseLevel" id="ug" value="UG">
-<input type="radio" name="courseLevel" id="pg" value="PG">
-<input type="radio" name="courseLevel" id="phd" value="PhD">
-
-and an error element:
-
-<small id="courseLevel-error" class="error"></small>
-
-My current showError() and clearError() functions work for normal inputs because they use input.nextElementSibling to locate the error element.
-
-I need to support radio button validation separately.
-
-Modify the code as follows:
-
-1. Add a function:
-   showRadioError(message)
-
-   - Sets the textContent of #courseLevel-error.
-   - Scrolls the radio group into view smoothly.
-   - Focuses the first radio button (id="ug") to guide keyboard and mobile users.
-
-2. Add a function:
-   clearRadioError()
-
-   - Clears the textContent of #courseLevel-error.
-
-3. Modify validateCourseLevel()
-
-   - Use:
-     document.querySelector('input[name="courseLevel"]:checked')
-   - If no radio is selected:
-       call showRadioError('Course Level is required.')
-       return false
-   - Otherwise:
-       call clearRadioError()
-       return true
-
-4. Keep showError() and clearError() unchanged for normal text inputs, email, select, and textarea fields.
-
-5. Add a reusable UX helper function:
-
-   focusCourseLevelGroup()
-
-   - Scroll smoothly to the first radio button.
-   - Focus the first radio button.
-   - Use:
-     scrollIntoView({
-       behavior: 'smooth',
-       block: 'center'
-     })
-
-6. showRadioError() should call focusCourseLevelGroup().
-
-7. Use modern ES6 syntax and return only the JavaScript code that needs to be added or changed. */
 function showRadioError(message) {
     document.getElementById(
         'courseLevel-error'
