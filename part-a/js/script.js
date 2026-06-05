@@ -3,10 +3,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const messageInput = document.getElementById('message');
   const charCounter = document.getElementById('char-counter');
   const successMessage = document.getElementById('success-message');
-});
 
+    //console.log('submit listener attached');
     form.addEventListener('submit', (e) => {
     e.preventDefault();
+    //console.log('submit intercepted');
     successMessage.textContent = '';
 
     const isValid = validateForm();
@@ -17,10 +18,11 @@ document.addEventListener('DOMContentLoaded', () => {
             email: form.email.value.trim(),
             country: form.country.value,
             courseLevel: form.courseLevel.value,
-            preferredUniversity: form.preferredUniversity.value.trim(),
+            preferredUniversity: form.university.value.trim(),
             message: form.message.value.trim()
         };
         console.log(JSON.stringify(formData));
+        successMessage.hidden = false;
         successMessage.textContent = 'Form submitted successfully!';
         form.reset();
         charCounter.textContent = '0 / 300';
@@ -79,22 +81,109 @@ function validateCountry() {
 }
 
 function validateCourseLevel() {
-    const courseLevel = form.courseLevel.value;
-    if (!courseLevel) {
-        showError(form.courseLevel, 'Course Level is required.');
+
+    const selected =
+        document.querySelector(
+            'input[name="courseLevel"]:checked'
+        );
+
+    if (!selected) {
+        showRadioError(
+            'Course Level is required.'
+        );
         return false;
     }
-    clearError(form.courseLevel);
+
+    clearRadioError();
     return true;
+}
+/*I have a Student Lead Capture Form written in vanilla JavaScript.
+
+The form contains a Course Level radio group:
+
+<input type="radio" name="courseLevel" id="ug" value="UG">
+<input type="radio" name="courseLevel" id="pg" value="PG">
+<input type="radio" name="courseLevel" id="phd" value="PhD">
+
+and an error element:
+
+<small id="courseLevel-error" class="error"></small>
+
+My current showError() and clearError() functions work for normal inputs because they use input.nextElementSibling to locate the error element.
+
+I need to support radio button validation separately.
+
+Modify the code as follows:
+
+1. Add a function:
+   showRadioError(message)
+
+   - Sets the textContent of #courseLevel-error.
+   - Scrolls the radio group into view smoothly.
+   - Focuses the first radio button (id="ug") to guide keyboard and mobile users.
+
+2. Add a function:
+   clearRadioError()
+
+   - Clears the textContent of #courseLevel-error.
+
+3. Modify validateCourseLevel()
+
+   - Use:
+     document.querySelector('input[name="courseLevel"]:checked')
+   - If no radio is selected:
+       call showRadioError('Course Level is required.')
+       return false
+   - Otherwise:
+       call clearRadioError()
+       return true
+
+4. Keep showError() and clearError() unchanged for normal text inputs, email, select, and textarea fields.
+
+5. Add a reusable UX helper function:
+
+   focusCourseLevelGroup()
+
+   - Scroll smoothly to the first radio button.
+   - Focus the first radio button.
+   - Use:
+     scrollIntoView({
+       behavior: 'smooth',
+       block: 'center'
+     })
+
+6. showRadioError() should call focusCourseLevelGroup().
+
+7. Use modern ES6 syntax and return only the JavaScript code that needs to be added or changed. */
+function showRadioError(message) {
+    document.getElementById(
+        'courseLevel-error'
+    ).textContent = message;
+    focusCourseLevelGroup();
+}
+
+function clearRadioError() {
+    document.getElementById(
+        'courseLevel-error'
+    ).textContent = '';
+}
+
+function focusCourseLevelGroup() {
+    const firstRadio = document.getElementById('ug');
+    firstRadio.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+    });
+    firstRadio.focus();
 }
 
 function validateUniversity() {
-    const university = form.preferredUniversity.value.trim();
+    const university = form.university.value.trim();
     if (!university) {
-        showError(form.preferredUniversity, 'Preferred University is required.');
+        showError(form.university, 'Preferred University is required.');
         return false;
     }
-    clearError(form.preferredUniversity);
+    clearError(form.university);
     return true;
 }
 
@@ -122,3 +211,4 @@ function clearError(input) {
     errorElement.textContent = '';
     input.classList.remove('error');
 }
+});
