@@ -1,1 +1,155 @@
+<!--Act as a frontend developer. Inside this index.html file, generate a standard HTML5 boilerplate.
 
+Link a CSS file at css/style.css in the head.
+
+Inside the body, add a <main> container.
+
+Inside <main>, add a form with id="leadform" and the novalidate attribute.
+
+Include these fields using semantic HTML: Full Name, Validated Email, Country dropdown, Course Level (radios: UG/PG/PhD), Preferred University, and a Message textarea.
+
+Include a container right under the textarea to display a 300-character live counter.-->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lead Form</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <main>
+      <form id="leadform" novalidate>
+        <!--Generate the HTML fields for a Student Lead Capture Form using semantic HTML only.
+
+Requirements:
+- Inside the existing <form id="leadform" novalidate>.
+- Use a wrapper div with class="form-group" for each field.
+- Each field must have a properly associated <label> using the for attribute.
+- Add an inline error container after each field using:
+  <small class="error" id="[field]-error"></small>
+
+Fields required:
+1. Full Name
+   - input type="text"
+   - id="fullName"
+   - name="fullName"
+   - placeholder="Enter your full name"
+
+2. Email
+   - input type="email"
+   - id="email"
+   - name="email"
+   - placeholder="Enter your email"
+
+3. Country
+   - select
+   - id="country"
+   - name="country"
+   - first option should be "Select Country"
+   - include a few sample countries
+
+4. Course Level
+   - radio button group
+   - values: UG, PG, PhD
+   - all radios must share name="courseLevel"
+   - wrap radios inside a fieldset with a legend
+
+5. Preferred University
+   - input type="text"
+   - id="university"
+   - name="university"
+   - placeholder="Preferred university"
+
+6. Message
+   - textarea
+   - id="message"
+   - name="message"
+   - maxlength="300"
+   - rows="5"
+
+7. Character counter below textarea:
+   <div id="char-counter">0 / 300</div>
+
+8. Submit button:
+   <button type="submit">Submit</button>
+
+9. Success message container after the form:
+   <div id="success-message" hidden></div>
+
+Return only the HTML that goes inside the form and success message container. Do not generate CSS or JavaScript.-->
+        <div class="form-group">
+          <label for="fullName">Full Name</label>
+          <input
+            type="text"
+            id="fullName"
+            name="fullName"
+            placeholder="Enter your full name"
+          />
+          <small class="error" id="fullName-error"></small>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Enter your email"
+          />
+          <small class="error" id="email-error"></small>
+        </div>
+
+        <div class="form-group">
+          <label for="country">Country</label>
+          <select id="country" name="country">
+            <option value="">Select Country</option>
+            <option value="us">United States</option>
+            <option value="ca">Canada</option>
+            <option value="uk">United Kingdom</option>
+          </select>
+          <small class="error" id="country-error"></small>
+        </div>
+
+        <div class="form-group">
+          <label for="courseLevel">Course Level</label>
+          <fieldset>
+            <legend>Choose your course level:</legend>
+            <input type="radio" id="ug" name="courseLevel" value="UG" />
+            <label for="ug">Undergraduate</label>
+            <input type="radio" id="pg" name="courseLevel" value="PG" />
+            <label for="pg">Postgraduate</label>
+            <input type="radio" id="phd" name="courseLevel" value="PhD" />
+            <label for="phd">Doctoral</label>
+          </fieldset>
+          <small class="error" id="courseLevel-error"></small>
+        </div>
+
+        <div class="form-group">
+          <label for="university">Preferred University</label>
+          <input
+            type="text"
+            id="university"
+            name="university"
+            placeholder="Preferred university"
+          />
+          <small class="error" id="university-error"></small>
+        </div>
+
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea
+            id="message"
+            name="message"
+            maxlength="300"
+            rows="5"
+          ></textarea>
+          <small class="error" id="message-error"></small>
+          <div id="char-counter">0 / 300</div>
+        </div>
+
+        <button type="submit">Submit</button>
+      </form>
+    </main>
+  </body>
+</html>
