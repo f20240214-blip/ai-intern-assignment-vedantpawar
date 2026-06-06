@@ -95,8 +95,6 @@ ai-intern-assignment-vedantpawar/
 
 **Status:** Loading state and submission work correctly. CORS issue between local Live Server and N8N cloud URL is being resolved by enabling Allowed Origins on the Webhook node.
 
-**Demo:** See `part-c/loom-link.txt`
-
 ---
 
 ## ⚙️ Environment Variables
