@@ -11,7 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
     successMessage.textContent = '';
 
     const isValid = validateForm();
-
     if (isValid) {
         const formData = {
             fullName: form.fullName.value.trim(),
@@ -21,7 +20,46 @@ document.addEventListener('DOMContentLoaded', () => {
             preferredUniversity: form.university.value.trim(),
             message: form.message.value.trim()
         };
-        console.log(JSON.stringify(formData));
+        const submitBtn = document.getElementById('submitBtn');
+        const btnText = document.getElementById('btnText');
+        const btnLoader = document.getElementById('btnLoader');
+        const thankYou = document.getElementById('thankYou');
+
+        // show loading state
+        if (submitBtn) submitBtn.disabled = true;
+        if (btnText) btnText.style.display = 'none';
+        if (btnLoader) btnLoader.style.display = 'inline-block';
+
+        fetch('https://fluffy-ice.app.n8n.cloud/webhook/leadform', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                fullName: formData.fullName,
+                email: formData.email,
+                country: formData.country,
+                courseLevel: (document.querySelector('input[name="courseLevel"]:checked') || {}).value,
+                preferredUniversity: formData.preferredUniversity,
+                message: formData.message
+            })
+        })
+            .then((res) => {
+                if (res.ok) {
+                    if (thankYou) thankYou.style.display = 'block';
+                    form.reset();
+                    charCounter.textContent = '0 / 300';
+                } else {
+                    alert('Submission failed. Please try again.');
+                }
+            })
+            .catch((err) => {
+                alert('Network error. Please check your connection.');
+                console.error(err);
+            })
+            .finally(() => {
+                if (submitBtn) submitBtn.disabled = false;
+                if (btnText) btnText.style.display = '';
+                if (btnLoader) btnLoader.style.display = 'none';
+            });
         successMessage.hidden = false;
         successMessage.textContent = 'Form submitted successfully!';
         form.reset();
