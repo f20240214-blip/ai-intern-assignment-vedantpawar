@@ -1,0 +1,202 @@
+{
+  "name": "workflow-b1-lead-notification",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "leadform",
+        "options": {
+          "allowedOrigins": "*",
+          "binaryPropertyName": "",
+          "noResponseBody": false
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "d6f7470f-747e-4ede-b2a3-bae3012b8bd2",
+      "name": "Webhook",
+      "webhookId": "d51f5420-1b55-4943-a16f-3cb89b5a8ba0"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "89426997-6b42-457d-94b7-2a93872eb60a",
+              "name": "fullName",
+              "value": "={{ $json.body.fullName }}",
+              "type": "string"
+            },
+            {
+              "id": "74d20f18-b79d-4756-9d47-d8e558221051",
+              "name": "email",
+              "value": "={{ $json.body.email }}",
+              "type": "string"
+            },
+            {
+              "id": "0702b4d1-7330-4920-9272-1d92da8c422c",
+              "name": "country",
+              "value": "={{ $json.body.country }}",
+              "type": "string"
+            },
+            {
+              "id": "92a55a24-ee3f-4669-850c-c4291c10fa60",
+              "name": "courseLevel",
+              "value": "={{ $json.body.courselevel }}",
+              "type": "string"
+            },
+            {
+              "id": "4d4ef6e1-fa64-44eb-8c65-c0fed81e4ddf",
+              "name": "preferredUniversity",
+              "value": "={{ $json.body.preferredUniversity }}",
+              "type": "string"
+            },
+            {
+              "id": "208b6201-8269-489a-812b-a46de4cf6c0e",
+              "name": "message",
+              "value": "={{ $json.body.message }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "52867d49-9bc7-4990-abcc-e6413bef3ffe",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "0b334ad7-d99e-4d63-9fa8-fb127340f780",
+              "leftValue": "{{ $json.body.courseLevel }}",
+              "rightValue": "\"UG\"",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        416,
+        0
+      ],
+      "id": "44a8d139-c619-42e8-9a2c-0ceaf1b2f85f",
+      "name": "If"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        624,
+        -96
+      ],
+      "id": "8deb3366-4cbf-454f-9a9d-319eb616f6a4",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Edit Fields').item.json.email }}",
+        "subject": "Hii, PG/PhD student lead",
+        "emailType": "text",
+        "message": "={{ $('Edit Fields').item.json.message }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        624,
+        96
+      ],
+      "id": "e738b3cd-8b39-4cc5-b726-fa59562d005d",
+      "name": "Send a message",
+      "webhookId": "ac302b58-0c24-40c6-ac92-478b7caf0d67",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "KOvkUa0SQuYlsrPH",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "712f9b0b-9e6b-4335-a340-ccba0bc7f18f",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "b291141815cccfbb8058acb623fa122a50520c9dfb92d92e9c8a3173548ceef4"
+  },
+  "nodeGroups": [],
+  "id": "XLIq6i1b8fjWAefy",
+  "tags": []
+}
