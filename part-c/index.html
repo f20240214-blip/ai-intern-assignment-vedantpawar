@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lead Form</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="js/script.js" defer></script>
+  </head>
+  <body>
+    <main>
+      <form id="leadform" novalidate>
+        <div class="form-group">
+          <label for="fullName">Full Name</label>
+          <input
+            type="text"
+            id="fullName"
+            name="fullName"
+            placeholder="Enter your full name"
+          />
+          <small class="error" id="fullName-error"></small>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Enter your email"
+          />
+          <small class="error" id="email-error"></small>
+        </div>
+
+        <div class="form-group">
+          <label for="country">Country</label>
+          <select id="country" name="country">
+            <option value="">Select Country</option>
+            <option value="us">United States</option>
+            <option value="ca">Canada</option>
+            <option value="uk">United Kingdom</option>
+          </select>
+          <small class="error" id="country-error"></small>
+        </div>
+
+        <div class="form-group">
+          <label for="courseLevel">Course Level</label>
+          <fieldset>
+            <legend>Choose your course level:</legend>
+            <input type="radio" id="ug" name="courseLevel" value="UG" />
+            <label for="ug">Undergraduate</label>
+            <input type="radio" id="pg" name="courseLevel" value="PG" />
+            <label for="pg">Postgraduate</label>
+            <input type="radio" id="phd" name="courseLevel" value="PhD" />
+            <label for="phd">Doctoral</label>
+          </fieldset>
+          <small class="error" id="courseLevel-error"></small>
+        </div>
+
+        <div class="form-group">
+          <label for="university">Preferred University</label>
+          <input
+            type="text"
+            id="university"
+            name="university"
+            placeholder="Preferred university"
+          />
+          <small class="error" id="university-error"></small>
+        </div>
+
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea
+            id="message"
+            name="message"
+            maxlength="300"
+            rows="5"
+          ></textarea>
+          <small class="error" id="message-error"></small>
+          <div id="char-counter">0 / 300</div>
+        </div>
+
+        <button type="submit">Submit</button>
+      </form>
+      <div id="success-message" hidden></div>
+    </main>
+  </body>
+</html>

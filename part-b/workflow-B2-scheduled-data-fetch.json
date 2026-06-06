@@ -1,0 +1,93 @@
+{
+  "name": "workflow-B2-scheduled-data-fetch",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 9
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        0,
+        0
+      ],
+      "id": "512cab0f-adf8-4a55-a97a-b81f377c957d",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "url": "http://universities.hipolabs.com/search?country=Canada",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "39cae7ea-7551-4d6c-bb81-2c1865a9a552",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "jsCode": "const filtered = $input.all().map(item => ({\n  json: {\n    name: item.json.name,\n    country: item.json.country,\n    website: item.json.web_pages?.[0] || \"N/A\",\n    domain: item.json.domains?.[0] || \"N/A\"\n  }\n}));\n\nreturn filtered.slice(0, 10);"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        416,
+        0
+      ],
+      "id": "2f6c8ccb-c380-454b-82c8-2c764196394e",
+      "name": "Code in JavaScript"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "97aa5b3a-e9ea-4975-9225-7013800adcd4",
+  "meta": {
+    "instanceId": "b291141815cccfbb8058acb623fa122a50520c9dfb92d92e9c8a3173548ceef4"
+  },
+  "nodeGroups": [],
+  "id": "Rcqrc7zwZA9pk9Ik",
+  "tags": []
+}
